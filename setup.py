@@ -24,9 +24,9 @@ def get_version(rel_path: str) -> str:
 long_description = read("README.rst")
 
 setup(
-    name="pip",
+    name="pip_resolver",
     version=get_version("src/pip/__init__.py"),
-    description="The PyPA recommended tool for installing Python packages.",
+    description="The fork of PIP tool with `resolve` command.",
     long_description=long_description,
     license="MIT",
     classifiers=[
@@ -44,14 +44,14 @@ setup(
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
     ],
-    url="https://pip.pypa.io/",
+    url="https://github.com/SmirnovOleg/pip",
     project_urls={
         "Documentation": "https://pip.pypa.io",
         "Source": "https://github.com/pypa/pip",
         "Changelog": "https://pip.pypa.io/en/stable/news/",
     },
     author="The pip developers",
-    author_email="distutils-sig@python.org",
+    author_email="oleg.smirnov@jetbrains.com",
     package_dir={"": "src"},
     packages=find_packages(
         where="src",

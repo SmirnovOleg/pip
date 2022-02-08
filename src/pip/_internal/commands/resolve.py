@@ -83,10 +83,16 @@ class ResolveCommand(InstallCommand, SessionCommandMixin):
 
     @staticmethod
     def _output(requirement_set: RequirementSet):
-        print('RESOLVED')
+        print('--- RESOLVED-BEGIN ---')
         for req in requirement_set.all_requirements:
-            print(f'Url: {req.link.url}')
-            print(f'Comes from: {req.comes_from.link.url if req.comes_from else None}')
+            print(f'name: {req.name}')
+            print(f'specifier: {req.specifier}')
+            print(f'link.ext: {req.link.ext}')
+            print(f'link.filename: {req.link.filename}')
+            print(f'link.comes_from: {req.link.comes_from}')
+            print(f'link.url: {req.link.url}')
+            print(f'comes_from.link.url: {req.comes_from.link.url if req.comes_from else None}')
+        print('--- RESOLVED-END ---')
 
     def get_requirements(
             self,
