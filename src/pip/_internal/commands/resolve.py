@@ -85,7 +85,7 @@ class ResolveCommand(InstallCommand, SessionCommandMixin):
             print(f'link.filename: {req.link.filename}')
             print(f'link.comes_from: {req.link.comes_from}')
             print(f'link.url: {req.link.url}')
-            print(f'comes_from.link.url: {req.comes_from.link.url if req.comes_from else None}')
+            print(f'comes_from.link.url: {req.comes_from.link.url if req.comes_from and req.comes_from.link else None}')
         print('--- RESOLVED-END ---')
 
     def get_requirements(
