@@ -1,6 +1,5 @@
-from functools import partial
 from optparse import Values
-from typing import List, Optional
+from typing import List
 
 from pip._internal.cache import WheelCache
 from pip._internal.cli.cmdoptions import make_target_python
@@ -8,17 +7,12 @@ from pip._internal.cli.req_command import SessionCommandMixin
 from pip._internal.cli.status_codes import SUCCESS
 from pip._internal.commands.install import InstallCommand
 from pip._internal.exceptions import CommandError
-from pip._internal.index.collector import LinkCollector
 from pip._internal.index.package_finder import PackageFinder
-# from pip._internal.models.index import PyPI
-from pip._internal.models.selection_prefs import SelectionPreferences
-from pip._internal.models.target_python import TargetPython
 from pip._internal.network.session import PipSession
-from pip._internal.operations.prepare import RequirementPreparer
+from pip._internal.operations.build.build_tracker import get_build_tracker
 from pip._internal.req import parse_requirements, InstallRequirement, RequirementSet
-from pip._internal.req.constructors import install_req_from_req_string, install_req_from_line, \
+from pip._internal.req.constructors import install_req_from_line, \
     install_req_from_parsed_requirement, install_req_from_editable
-from pip._internal.req.req_tracker import get_requirement_tracker, RequirementTracker
 from pip._internal.utils.temp_dir import TempDirectory
 
 
@@ -45,7 +39,7 @@ class ResolveCommand(InstallCommand, SessionCommandMixin):
         )
 
         wheel_cache = WheelCache(options.cache_dir, options.format_control)
-        req_tracker = self.enter_context(get_requirement_tracker())
+        build_tracker = self.enter_context(get_build_tracker())
         directory = TempDirectory(
             delete=not options.no_clean,
             kind="install",
@@ -55,7 +49,7 @@ class ResolveCommand(InstallCommand, SessionCommandMixin):
         preparer = self.make_requirement_preparer(
             temp_build_dir=directory,
             options=options,
-            req_tracker=req_tracker,
+            build_tracker=build_tracker,
             session=session,
             finder=finder,
             use_user_site=options.use_user_site,
